@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pageTitle %> | AutoCare Manager</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <!-- Main Navigation Header -->
+    <header class="site-nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-brand">
+                <div class="brand-badge">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 11.2 2 11.6 2 12v4c0 .6.4 1 1 1h2"/>
+                        <circle cx="7" cy="17" r="2"/>
+                        <path d="M9 17h6"/>
+                        <circle cx="17" cy="17" r="2"/>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h1>AutoCare Manager</h1>
+                    <span>Fleet &amp; Service Operations</span>
+                </div>
+            </a>
+
+            <nav class="nav-menu">
+                <% if (currentRole === 'admin') { %>
+                    <a href="/admin/dashboard" class="nav-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                        Admin Dashboard
+                    </a>
+                    <a href="/admin/services" class="nav-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                        Job Operations
+                    </a>
+                    <a href="/vehicles" class="nav-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 11.2 2 11.6 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+                        Workshop Fleet
+                    </a>
+                <% } else { %>
+                    <a href="/owner/dashboard" class="nav-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                        My Dashboard
+                    </a>
+                    <a href="/vehicles" class="nav-link active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 11.2 2 11.6 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+                        My Vehicles
+                    </a>
+                    <a href="/services/book" class="nav-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                        Book Service
+                    </a>
+                <% } %>
+
+                <% if (currentUser) { %>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-left: 10px; padding-left: 12px; border-left: 1px solid rgba(255,255,255,0.15);">
+                        <span style="font-size: 13px; color: #38bdf8; font-weight: 600;">
+                            <%= currentRole === 'admin' ? '🏭 Admin: ' : '🚗 ' %><%= currentUser %>
+                        </span>
+                        <a href="/logout" class="btn btn-outline btn-sm" style="background: rgba(255,255,255,0.06); color: #f87171; border-color: rgba(248,113,113,0.3); font-size: 11px; padding: 4px 8px;">
+                            Logout
+                        </a>
+                    </div>
+                <% } else { %>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-left: 10px; padding-left: 12px; border-left: 1px solid rgba(255,255,255,0.15);">
+                        <a href="/login" class="btn btn-primary btn-sm" style="font-size: 12px; padding: 6px 12px;">Sign In</a>
+                    </div>
+                <% } %>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-wrapper">
+
+        <!-- Vehicle Profile Summary Banner -->
+        <section class="hero-banner" style="margin-bottom: 28px; padding: 28px 32px;">
+            <div class="hero-content">
+                <span class="reg-plate" style="font-size: 16px; padding: 6px 14px; margin-bottom: 12px;">
+                    <span class="reg-plate-ind">IND</span>
+                    <%= vehicleNumber %>
+                </span>
+
+                <% if (vehicle) { %>
+                    <h2 style="font-size: 26px;"><%= vehicle.model %></h2>
+                    <p style="color: #cbd5e1; font-size: 14px; margin-top: 4px;">
+                        Registered Owner: <strong><%= vehicle.ownerName %></strong>
+                        <%= vehicle.ownerPhone ? `(${vehicle.ownerPhone})` : '' %>
+                        &bull; Odometer: <strong><%= vehicle.currentMileage.toLocaleString('en-IN') %> km</strong>
+                        &bull; Registered: <strong><%= new Date(vehicle.purchaseDate).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' }) %></strong>
+                    </p>
+                <% } else { %>
+                    <h2>Vehicle History Archive</h2>
+                    <p>Referenced vehicle registration number: <%= vehicleNumber %></p>
+                <% } %>
+            </div>
+
+            <div class="hero-actions">
+                <a href="/services/book?vehicle=<%= vehicleNumber %>" class="btn btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                    Book New Service
+                </a>
+                <a href="/vehicles" class="btn btn-outline" style="background: rgba(255,255,255,0.08); color: white; border-color: rgba(255,255,255,0.2);">
+                    &larr; Back to Fleet
+                </a>
+            </div>
+        </section>
+
+        <!-- Vehicle Health & Expenditure Metrics -->
+        <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 32px;">
+            <div class="kpi-card" style="padding: 20px;">
+                <span class="kpi-label">Service Visits</span>
+                <div class="kpi-value" style="font-size: 28px; margin: 8px 0 0;"><%= services.length %></div>
+                <div class="kpi-foot">Lifetime workshop visits</div>
+            </div>
+
+            <div class="kpi-card" style="padding: 20px;">
+                <span class="kpi-label">Cumulative Maintenance Spend</span>
+                <div class="kpi-value" style="font-size: 28px; margin: 8px 0 0; color: #047857;">₹<%= totalSpent.toLocaleString('en-IN') %></div>
+                <div class="kpi-foot">Billed parts and repair labor</div>
+            </div>
+
+            <div class="kpi-card" style="padding: 20px;">
+                <span class="kpi-label">Service Interval Status</span>
+                <div style="margin-top: 10px;">
+                    <% 
+                        const sixMonthsAgo = new Date();
+                        sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+                        const isDue = vehicle && (vehicle.currentMileage >= 10000 || (vehicle.purchaseDate && new Date(vehicle.purchaseDate) <= sixMonthsAgo));
+                    %>
+                    <% if (isDue) { %>
+                        <span class="status-pill pill-reminder" style="font-size: 13px; padding: 6px 12px;">
+                            ⚠️ Service Due (&ge; 10k km / &gt; 6 mo)
+                        </span>
+                    <% } else { %>
+                        <span class="status-pill pill-completed" style="font-size: 13px; padding: 6px 12px;">
+                            Optimal Condition
+                        </span>
+                    <% } %>
+                </div>
+                <div class="kpi-foot" style="margin-top: 8px;">Based on current odometer reading</div>
+            </div>
+        </div>
+
+        <!-- Vertical Maintenance Timeline -->
+        <div class="section-title-group">
+            <h3 class="section-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Chronological Maintenance Timeline
+            </h3>
+            <span style="font-size: 13px; color: var(--text-muted);"><%= services.length %> Service Record(s)</span>
+        </div>
+
+        <% if (services.length === 0) { %>
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                </div>
+                <h3>No Service History Recorded</h3>
+                <p>This vehicle has zero past service visits logged. Book a service appointment to begin recording maintenance history.</p>
+                <a href="/services/book?vehicle=<%= vehicleNumber %>" class="btn btn-primary">Book First Service</a>
+            </div>
+        <% } else { %>
+            <div class="timeline-track">
+                <% services.forEach((s) => { %>
+                    <div class="timeline-item">
+                        <div class="timeline-node"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-header">
+                                <div>
+                                    <div class="timeline-service-type"><%= s.serviceType %></div>
+                                    <div class="timeline-date">
+                                        Recorded on <%= new Date(s.bookingDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' }) %>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <% if (s.status === 'Completed') { %>
+                                        <span class="status-pill pill-completed">Completed</span>
+                                    <% } else if (s.status === 'Accepted') { %>
+                                        <span class="status-pill pill-accepted">In Progress</span>
+                                    <% } else if (s.status === 'Rejected') { %>
+                                        <span class="status-pill pill-rejected">Rejected</span>
+                                    <% } else { %>
+                                        <span class="status-pill pill-pending">Pending Triage</span>
+                                    <% } %>
+
+                                    <% if (s.cost > 0) { %>
+                                        <span class="timeline-cost-badge">₹<%= s.cost.toLocaleString('en-IN') %></span>
+                                    <% } %>
+                                </div>
+                            </div>
+
+                            <div class="timeline-field">
+                                <div class="timeline-field-label">Customer Reported Issue / Symptom:</div>
+                                <div style="color: var(--text-primary);"><%= s.issueDescription %></div>
+                            </div>
+
+                            <% if (s.partsReplaced && s.partsReplaced !== 'None') { %>
+                                <div class="timeline-field">
+                                    <div class="timeline-field-label">Parts &amp; Consumables Replaced:</div>
+                                    <div style="color: #0369a1; font-weight: 500;"><%= s.partsReplaced %></div>
+                                </div>
+                            <% } %>
+
+                            <% if (s.notes) { %>
+                                <div class="timeline-notes-box">
+                                    <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px;">Technician Notes:</div>
+                                    <%= s.notes %>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } %>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 AutoCare Manager &bull; Enterprise Automotive Service &amp; Fleet Management Platform</p>
+    </footer>
+
+</body>
+</html>

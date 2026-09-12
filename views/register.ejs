@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pageTitle %> | AutoCare Manager</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body style="display: flex; flex-direction: column; justify-content: space-between; min-height: 100vh;">
+
+    <!-- Top Navigation Header -->
+    <header class="site-nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-brand">
+                <div class="brand-badge">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 11.2 2 11.6 2 12v4c0 .6.4 1 1 1h2"/>
+                        <circle cx="7" cy="17" r="2"/>
+                        <path d="M9 17h6"/>
+                        <circle cx="17" cy="17" r="2"/>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h1>AutoCare Manager</h1>
+                    <span>Fleet &amp; Service Operations</span>
+                </div>
+            </a>
+
+            <nav class="nav-menu">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/login" class="nav-link">Sign In</a>
+                <a href="/register" class="nav-link active">Register</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-wrapper" style="display: flex; align-items: center; justify-content: center; padding: 40px 16px;">
+
+        <div class="form-shell" style="max-width: 480px; width: 100%;">
+            <div class="form-shell-header" style="text-align: center;">
+                <h2>Register as Vehicle Owner</h2>
+                <p>Create your vehicle owner profile to track maintenance and book services</p>
+            </div>
+
+            <div class="form-shell-body">
+
+                <% if (error) { %>
+                    <div style="background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; padding: 12px 16px; border-radius: var(--radius-sm); font-size: 13px; margin-bottom: 20px;">
+                        <%= error %>
+                    </div>
+                <% } %>
+
+                <!-- Admin Access Notice -->
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #0284c7; padding: 12px 14px; border-radius: var(--radius-sm); margin-bottom: 20px; font-size: 12.5px; color: var(--text-secondary); line-height: 1.5;">
+                    <strong style="color: var(--text-headline);">🛡️ Workshop Admin Access:</strong> Workshop &amp; Service Center admin privileges are restricted. Public accounts are created exclusively for Vehicle Owners.
+                </div>
+
+                <form action="/register" method="POST" autocomplete="off">
+                    <div class="form-group">
+                        <label for="name">Full Name <span class="req">*</span></label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="e.g. Rahul Sharma" autocomplete="off" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address <span class="req">*</span></label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email address" autocomplete="off" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" class="form-control" placeholder="e.g. +91 98765 43210" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password <span class="req">*</span></label>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Create a secure password" autocomplete="new-password" required minlength="4">
+                    </div>
+
+                    <button type="submit" class="btn btn-success" style="width: 100%; padding: 12px; margin-top: 10px; font-size: 14px; font-weight: 600;">
+                        Complete Registration
+                    </button>
+                </form>
+
+                <div style="text-align: center; margin-top: 20px; font-size: 13px; color: var(--text-muted);">
+                    Already have an account? <a href="/login" style="color: var(--brand-primary); font-weight: 600;">Sign in here</a>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 AutoCare Manager &bull; Enterprise Automotive Service &amp; Fleet Management Platform</p>
+    </footer>
+
+</body>
+</html>

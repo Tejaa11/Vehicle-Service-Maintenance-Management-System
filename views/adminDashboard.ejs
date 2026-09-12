@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pageTitle %> | AutoCare Manager</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <!-- Main Navigation Header -->
+    <header class="site-nav">
+        <div class="nav-inner">
+            <a href="/admin/dashboard" class="nav-brand">
+                <div class="brand-badge" style="background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h1>AutoCare Manager</h1>
+                    <span style="color: #f59e0b;">Service Center Admin Portal</span>
+                </div>
+            </a>
+
+            <nav class="nav-menu">
+                <a href="/admin/dashboard" class="nav-link active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    Admin Dashboard
+                </a>
+                <a href="/admin/services" class="nav-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                    Job Operations
+                </a>
+                <a href="/vehicles" class="nav-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 11.2 2 11.6 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+                    Fleet
+                </a>
+
+                <!-- User Session Chip -->
+                <div style="display: flex; align-items: center; gap: 10px; margin-left: 12px; padding-left: 12px; border-left: 1px solid rgba(255,255,255,0.15);">
+                    <span style="font-size: 13px; color: #fde68a; font-weight: 600;">
+                        🏭 <%= currentUser || 'Admin' %>
+                    </span>
+                    <a href="/logout" class="btn btn-outline btn-sm" style="background: rgba(255,255,255,0.06); color: #f87171; border-color: rgba(248,113,113,0.3); font-size: 11px; padding: 4px 8px;">
+                        Logout
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-wrapper">
+
+        <!-- Executive Admin Hero Banner -->
+        <section class="hero-banner" style="background: linear-gradient(135deg, #18181b 0%, #27272a 100%);">
+            <div class="hero-content">
+                <div class="hero-pill" style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.3); color: #f59e0b;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                    SERVICE CENTER DESK &bull; WORKSHOP COMMAND
+                </div>
+                <h2>Service Center Management Center</h2>
+                <p>Monitor pending repair bookings, triage triage job sheets, assign parts replaced, and review total workshop revenue.</p>
+            </div>
+            <div class="hero-actions">
+                <a href="/services/book" class="btn btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Log Walk-in Service
+                </a>
+                <a href="/admin/services" class="btn btn-outline" style="background: rgba(255,255,255,0.08); color: white; border-color: rgba(255,255,255,0.2);">
+                    All Repair Orders
+                </a>
+            </div>
+        </section>
+
+        <!-- KPI Metrics Grid -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-top">
+                    <span class="kpi-label">Pending Triage</span>
+                    <div class="kpi-icon-wrap kpi-icon-amber">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                </div>
+                <div class="kpi-value" style="color: #d97706;"><%= pendingServices.length %></div>
+                <div class="kpi-foot">New incoming customer requests</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-top">
+                    <span class="kpi-label">Work in Progress</span>
+                    <div class="kpi-icon-wrap kpi-icon-blue">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                    </div>
+                </div>
+                <div class="kpi-value" style="color: #0284c7;"><%= inProgressServices.length %></div>
+                <div class="kpi-foot">Accepted jobs currently in service bay</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-top">
+                    <span class="kpi-label">Completed Jobs</span>
+                    <div class="kpi-icon-wrap kpi-icon-emerald">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </div>
+                </div>
+                <div class="kpi-value" style="color: #059669;"><%= completedServices.length %></div>
+                <div class="kpi-foot">Job sheets closed with invoices</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-top">
+                    <span class="kpi-label">Total Invoiced Revenue</span>
+                    <div class="kpi-icon-wrap kpi-icon-purple">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+                </div>
+                <div class="kpi-value">₹<%= totalRevenue.toLocaleString('en-IN') %></div>
+                <div class="kpi-foot">Gross workshop billing revenue</div>
+            </div>
+        </div>
+
+        <!-- Section 1: Pending Customer Requests (Triage Desk) -->
+        <div class="section-title-group">
+            <h3 class="section-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Incoming Customer Requests Requiring Action (<%= pendingServices.length %>)
+            </h3>
+        </div>
+
+        <div class="table-panel">
+            <div class="table-responsive">
+                <% if (pendingServices.length === 0) { %>
+                    <div class="empty-state" style="padding: 36px 20px;">
+                        <p style="color: #059669; font-weight: 600; margin-bottom: 0;">✓ Triage desk is clear! No pending requests waiting for approval.</p>
+                    </div>
+                <% } else { %>
+                    <table class="saas-table">
+                        <thead>
+                            <tr>
+                                <th>Registration</th>
+                                <th>Service Scope</th>
+                                <th>Driver Concern / Complaint</th>
+                                <th>Date Logged</th>
+                                <th>Decision Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% pendingServices.forEach((s) => { %>
+                                <tr>
+                                    <td>
+                                        <a href="/vehicles/<%= s.vehicleNumber %>/history" style="text-decoration: none;">
+                                            <span class="reg-plate" style="margin-bottom: 0; font-size: 13px; padding: 4px 8px;">
+                                                <span class="reg-plate-ind">IND</span>
+                                                <%= s.vehicleNumber %>
+                                            </span>
+                                        </a>
+                                    </td>
+                                    <td><strong><%= s.serviceType %></strong></td>
+                                    <td style="color: var(--text-secondary); max-width: 280px;"><%= s.issueDescription %></td>
+                                    <td><%= new Date(s.bookingDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' }) %></td>
+                                    <td>
+                                        <div style="display: flex; gap: 6px;">
+                                            <a href="/admin/services/<%= s._id %>/status?status=Accepted" class="btn btn-success btn-sm">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                                Accept Job
+                                            </a>
+                                            <a href="/admin/services/<%= s._id %>/status?status=Rejected" class="btn btn-danger btn-sm" onclick="return confirm('Decline service request for <%= s.vehicleNumber %>?');">
+                                                Decline
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                <% } %>
+            </div>
+        </div>
+
+        <!-- Section 2: Active Workshop Jobs (Ready to Complete) -->
+        <div class="section-title-group">
+            <h3 class="section-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                Work In Progress &bull; Active Repair Bay (<%= inProgressServices.length %>)
+            </h3>
+        </div>
+
+        <div class="table-panel">
+            <div class="table-responsive">
+                <% if (inProgressServices.length === 0) { %>
+                    <div class="empty-state" style="padding: 36px 20px;">
+                        <p>No active jobs currently on the shop floor. Accept pending requests above to begin work.</p>
+                    </div>
+                <% } else { %>
+                    <table class="saas-table">
+                        <thead>
+                            <tr>
+                                <th>Registration</th>
+                                <th>Service Scope</th>
+                                <th>Driver Symptoms</th>
+                                <th>Status</th>
+                                <th style="text-align: right;">Job Sheet Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% inProgressServices.forEach((s) => { %>
+                                <tr>
+                                    <td>
+                                        <span class="reg-plate" style="margin-bottom: 0; font-size: 13px; padding: 4px 8px;">
+                                            <span class="reg-plate-ind">IND</span>
+                                            <%= s.vehicleNumber %>
+                                        </span>
+                                    </td>
+                                    <td><strong><%= s.serviceType %></strong></td>
+                                    <td style="color: var(--text-secondary); max-width: 280px;"><%= s.issueDescription %></td>
+                                    <td>
+                                        <span class="status-pill pill-accepted">In Progress</span>
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <a href="/admin/services/<%= s._id %>/complete" class="btn btn-primary btn-sm">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                            Record Parts &amp; Complete Bill
+                                        </a>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                <% } %>
+            </div>
+        </div>
+
+        <!-- Section 3: Recent Closed Invoices -->
+        <div class="section-title-group">
+            <h3 class="section-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                Recently Invoiced Services
+            </h3>
+            <a href="/admin/services" class="btn btn-outline btn-sm">View Complete Log</a>
+        </div>
+
+        <div class="table-panel">
+            <div class="table-responsive">
+                <% if (completedServices.length === 0) { %>
+                    <div class="empty-state" style="padding: 30px;">
+                        <p>No completed repair invoices recorded yet.</p>
+                    </div>
+                <% } else { %>
+                    <table class="saas-table">
+                        <thead>
+                            <tr>
+                                <th>Registration</th>
+                                <th>Service Conducted</th>
+                                <th>Parts Replaced</th>
+                                <th>Completion Date</th>
+                                <th>Billed Invoice</th>
+                                <th style="text-align: right;">History</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% completedServices.slice(0, 5).forEach((s) => { %>
+                                <tr>
+                                    <td>
+                                        <span class="reg-plate" style="margin-bottom: 0; font-size: 13px; padding: 4px 8px;">
+                                            <span class="reg-plate-ind">IND</span>
+                                            <%= s.vehicleNumber %>
+                                        </span>
+                                    </td>
+                                    <td><strong><%= s.serviceType %></strong></td>
+                                    <td style="color: var(--text-secondary);"><%= s.partsReplaced %></td>
+                                    <td><%= s.serviceDate ? new Date(s.serviceDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : '-' %></td>
+                                    <td><strong style="color: #047857; font-size: 15px;">₹<%= s.cost.toLocaleString('en-IN') %></strong></td>
+                                    <td style="text-align: right;">
+                                        <a href="/vehicles/<%= s.vehicleNumber %>/history" class="btn btn-outline btn-sm">Vehicle Log</a>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                <% } %>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 AutoCare Manager &bull; Enterprise Automotive Service &amp; Fleet Management Platform</p>
+    </footer>
+
+</body>
+</html>

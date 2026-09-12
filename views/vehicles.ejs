@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pageTitle %> | AutoCare Manager</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <!-- Main Navigation Header -->
+    <header class="site-nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-brand">
+                <div class="brand-badge">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 11.2 2 11.6 2 12v4c0 .6.4 1 1 1h2"/>
+                        <circle cx="7" cy="17" r="2"/>
+                        <path d="M9 17h6"/>
+                        <circle cx="17" cy="17" r="2"/>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h1>AutoCare Manager</h1>
+                    <span>Fleet &amp; Service Operations</span>
+                </div>
+            </a>
+
+            <nav class="nav-menu">
+                <% if (currentRole === 'admin') { %>
+                    <a href="/admin/dashboard" class="nav-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                        Admin Dashboard
+                    </a>
+                    <a href="/admin/services" class="nav-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                        Job Operations
+                    </a>
+                    <a href="/vehicles" class="nav-link active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 11.2 2 11.6 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+                        Workshop Fleet
+                    </a>
+                <% } else { %>
+                    <a href="/owner/dashboard" class="nav-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                        My Dashboard
+                    </a>
+                    <a href="/vehicles" class="nav-link active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 11.2 2 11.6 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+                        My Vehicles
+                    </a>
+                    <a href="/services/book" class="nav-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                        Book Service
+                    </a>
+                <% } %>
+
+                <% if (currentUser) { %>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-left: 10px; padding-left: 12px; border-left: 1px solid rgba(255,255,255,0.15);">
+                        <span style="font-size: 13px; color: #38bdf8; font-weight: 600;">
+                            <%= currentRole === 'admin' ? '🏭 Admin: ' : '🚗 ' %><%= currentUser %>
+                        </span>
+                        <a href="/logout" class="btn btn-outline btn-sm" style="background: rgba(255,255,255,0.06); color: #f87171; border-color: rgba(248,113,113,0.3); font-size: 11px; padding: 4px 8px;">
+                            Logout
+                        </a>
+                    </div>
+                <% } else { %>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-left: 10px; padding-left: 12px; border-left: 1px solid rgba(255,255,255,0.15);">
+                        <a href="/login" class="btn btn-primary btn-sm" style="font-size: 12px; padding: 6px 12px;">Sign In</a>
+                    </div>
+                <% } %>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-wrapper">
+
+        <div class="page-header">
+            <div class="page-title">
+                <h1>Registered Vehicles Fleet</h1>
+                <p>Monitor vehicle health, mileage thresholds, ownership details, and maintenance logs</p>
+            </div>
+            <a href="/vehicles/add" class="btn btn-primary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Register New Vehicle
+            </a>
+        </div>
+
+        <% if (vehicles.length === 0) { %>
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 11.2 2 11.6 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+                </div>
+                <h3>No Vehicles Registered Yet</h3>
+                <p>Register your first vehicle to monitor odometer readings, receive service interval reminders, and book appointments.</p>
+                <a href="/vehicles/add" class="btn btn-primary">+ Register Vehicle</a>
+            </div>
+        <% } else { %>
+            <div class="vehicle-grid">
+                <% vehicles.forEach((v) => { %>
+                    <div class="vehicle-card">
+                        <div class="vehicle-card-top">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <span class="reg-plate">
+                                    <span class="reg-plate-ind">IND</span>
+                                    <%= v.vehicleNumber %>
+                                </span>
+                                <% 
+                                    const sixMonthsAgo = new Date();
+                                    sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+                                    const isDue = v.currentMileage >= 10000 || (v.purchaseDate && new Date(v.purchaseDate) <= sixMonthsAgo);
+                                %>
+                                <% if (isDue) { %>
+                                    <span class="status-pill pill-reminder">
+                                        ⚠️ Service Due
+                                    </span>
+                                <% } else { %>
+                                    <span class="status-pill pill-completed">
+                                        Optimal
+                                    </span>
+                                <% } %>
+                            </div>
+
+                            <div class="vehicle-model-name"><%= v.model %></div>
+                            <div class="vehicle-owner-meta">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                <strong><%= v.ownerName %></strong>
+                                <%= v.ownerPhone ? `&bull; ${v.ownerPhone}` : '' %>
+                            </div>
+                        </div>
+
+                        <div class="vehicle-card-body">
+                            <div class="meta-tile">
+                                <span class="meta-tile-label">Current Odometer</span>
+                                <span class="meta-tile-val" style="color: <%= v.currentMileage >= 10000 ? '#c2410c' : 'inherit' %>;">
+                                    <%= v.currentMileage.toLocaleString('en-IN') %> km
+                                </span>
+                            </div>
+                            <div class="meta-tile">
+                                <span class="meta-tile-label">Purchase Date</span>
+                                <span class="meta-tile-val">
+                                    <%= new Date(v.purchaseDate).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' }) %>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="vehicle-card-actions">
+                            <div style="display: flex; gap: 6px;">
+                                <a href="/vehicles/<%= v.vehicleNumber %>/history" class="btn btn-primary btn-sm">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                    History
+                                </a>
+                                <a href="/services/book?vehicle=<%= v.vehicleNumber %>" class="btn btn-outline btn-sm">
+                                    Book Service
+                                </a>
+                            </div>
+
+                            <a href="/vehicles/delete/<%= v._id %>" class="btn btn-danger btn-sm" onclick="return confirm('Permanently remove vehicle <%= v.vehicleNumber %> from system?');" title="Delete Vehicle">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } %>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 AutoCare Manager &bull; Enterprise Automotive Service &amp; Fleet Management Platform</p>
+    </footer>
+
+</body>
+</html>

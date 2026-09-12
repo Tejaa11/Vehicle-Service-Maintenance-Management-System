@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pageTitle %> | AutoCare Manager</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <!-- Main Navigation Header -->
+    <header class="site-nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-brand">
+                <div class="brand-badge">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 11.2 2 11.6 2 12v4c0 .6.4 1 1 1h2"/>
+                        <circle cx="7" cy="17" r="2"/>
+                        <path d="M9 17h6"/>
+                        <circle cx="17" cy="17" r="2"/>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h1>AutoCare Manager</h1>
+                    <span>Fleet &amp; Service Operations</span>
+                </div>
+            </a>
+
+            <nav class="nav-menu">
+                <a href="/" class="nav-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    Dashboard
+                </a>
+                <a href="/vehicles" class="nav-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 11.2 2 11.6 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+                    Vehicles
+                </a>
+                <a href="/services/book" class="nav-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                    Book Service
+                </a>
+                <a href="/admin/dashboard" class="nav-link active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                    Service Center
+                </a>
+
+                <% if (currentUser) { %>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-left: 10px; padding-left: 12px; border-left: 1px solid rgba(255,255,255,0.15);">
+                        <span style="font-size: 13px; color: #38bdf8; font-weight: 600;">
+                            <%= currentRole === 'admin' ? '🏭 Admin: ' : '🚗 ' %><%= currentUser %>
+                        </span>
+                        <a href="/logout" class="btn btn-outline btn-sm" style="background: rgba(255,255,255,0.06); color: #f87171; border-color: rgba(248,113,113,0.3); font-size: 11px; padding: 4px 8px;">
+                            Logout
+                        </a>
+                    </div>
+                <% } else { %>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-left: 10px; padding-left: 12px; border-left: 1px solid rgba(255,255,255,0.15);">
+                        <a href="/login" class="btn btn-primary btn-sm" style="font-size: 12px; padding: 6px 12px;">Sign In</a>
+                    </div>
+                <% } %>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-wrapper">
+
+        <div class="form-shell">
+            <div class="form-shell-header">
+                <h2>Workshop Job Completion Sheet</h2>
+                <p>Record billable components, final labor cost, and technician service notes</p>
+            </div>
+
+            <div style="background: #f8fafc; padding: 18px 32px; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                <div>
+                    <span class="reg-plate" style="margin-bottom: 0; font-size: 13px; padding: 4px 8px;">
+                        <span class="reg-plate-ind">IND</span>
+                        <%= service.vehicleNumber %>
+                    </span>
+                    <span style="font-size: 13px; color: var(--text-secondary); margin-left: 10px;">
+                        Scope: <strong><%= service.serviceType %></strong>
+                    </span>
+                </div>
+                <div style="font-size: 12px; color: var(--text-muted);">
+                    Booked: <%= new Date(service.bookingDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) %>
+                </div>
+            </div>
+
+            <div class="form-shell-body">
+                <!-- Customer Reported Issue -->
+                <div style="background: #f1f5f9; border-radius: var(--radius-sm); padding: 14px 18px; margin-bottom: 24px; border-left: 3px solid #0284c7;">
+                    <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 4px;">
+                        Customer Reported Issue / Work Scope:
+                    </div>
+                    <div style="font-size: 14px; color: var(--text-primary);">
+                        <%= service.issueDescription || 'Regular maintenance inspection requested' %>
+                    </div>
+                </div>
+
+                <form action="/admin/services/<%= service._id %>/complete" method="POST">
+
+                    <!-- Section 1 -->
+                    <div class="form-section-title">01 &bull; Parts &amp; Consumables Replaced</div>
+
+                    <div class="form-group">
+                        <label for="partsReplaced">List of New Parts Installed <span class="req">*</span></label>
+                        <textarea id="partsReplaced" name="partsReplaced" class="form-control" rows="3" placeholder="e.g. Front Ceramic Brake Pads, Synthetic Engine Oil 5W-30 (3.5L), Oil Filter, Air Filter" required><%= service.partsReplaced === 'None' ? '' : service.partsReplaced %></textarea>
+                        <div class="input-hint">Specify exact OEM/OES components, oils, or parts replaced during work</div>
+                    </div>
+
+                    <!-- Section 2 -->
+                    <div class="form-section-title">02 &bull; Invoiced Billing Amount</div>
+
+                    <div class="form-group">
+                        <label for="cost">Total Service Invoice Amount (INR ₹) <span class="req">*</span></label>
+                        <div style="position: relative; display: flex; align-items: center;">
+                            <span style="position: absolute; left: 14px; font-weight: 700; color: var(--text-muted); font-size: 16px;">₹</span>
+                            <input type="number" id="cost" name="cost" class="form-control" placeholder="3850" value="<%= service.cost || '' %>" required min="0" style="padding-left: 32px; font-size: 16px; font-weight: 700; color: #047857;">
+                        </div>
+                        <div class="input-hint">Total comprehensive bill including parts, consumables, and labor charges</div>
+                    </div>
+
+                    <!-- Section 3 -->
+                    <div class="form-section-title">03 &bull; Lead Technician Observations</div>
+
+                    <div class="form-group">
+                        <label for="notes">Diagnostic Findings &amp; Future Recommendations</label>
+                        <textarea id="notes" name="notes" class="form-control" rows="3" placeholder="e.g. Brake rotors turned and cleaned. Caliper pins greased. Road test confirmed zero brake fade. Next service recommended in 6 months or 5,000 km."><%= service.notes %></textarea>
+                        <div class="input-hint">Observations documented on the vehicle's permanent maintenance history</div>
+                    </div>
+
+                    <div class="form-actions-bar">
+                        <a href="/admin/services" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-success">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Save &amp; Mark as Completed
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 AutoCare Manager &bull; Enterprise Automotive Service &amp; Fleet Management Platform</p>
+    </footer>
+
+</body>
+</html>

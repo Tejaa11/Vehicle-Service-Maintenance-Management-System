@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pageTitle %> | AutoCare Manager</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <!-- Main Navigation Header -->
+    <header class="site-nav">
+        <div class="nav-inner">
+            <a href="/owner/dashboard" class="nav-brand">
+                <div class="brand-badge">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 11.2 2 11.6 2 12v4c0 .6.4 1 1 1h2"/>
+                        <circle cx="7" cy="17" r="2"/>
+                        <path d="M9 17h6"/>
+                        <circle cx="17" cy="17" r="2"/>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h1>AutoCare Manager</h1>
+                    <span>Vehicle Owner Portal</span>
+                </div>
+            </a>
+
+            <nav class="nav-menu">
+                <a href="/owner/dashboard" class="nav-link active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    My Dashboard
+                </a>
+                <a href="/vehicles" class="nav-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 11.2 2 11.6 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+                    My Vehicles
+                </a>
+                <a href="/services/book" class="nav-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                    Book Service
+                </a>
+
+                <!-- User Session Chip -->
+                <% if (currentUser) { %>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-left: 10px; padding-left: 12px; border-left: 1px solid rgba(255,255,255,0.15);">
+                        <span style="font-size: 13px; color: #38bdf8; font-weight: 600;">
+                            🚗 <%= currentUser %>
+                        </span>
+                        <a href="/logout" class="btn btn-outline btn-sm" style="background: rgba(255,255,255,0.06); color: #f87171; border-color: rgba(248,113,113,0.3); font-size: 11px; padding: 4px 8px;">
+                            Logout
+                        </a>
+                    </div>
+                <% } else { %>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-left: 10px; padding-left: 12px; border-left: 1px solid rgba(255,255,255,0.15);">
+                        <a href="/login" class="btn btn-primary btn-sm" style="font-size: 12px; padding: 6px 12px;">Sign In</a>
+                    </div>
+                <% } %>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-wrapper">
+
+        <!-- Executive Hero Banner -->
+        <section class="hero-banner">
+            <div class="hero-content">
+                <div class="hero-pill">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                    VEHICLE OWNER PORTAL &bull; ACTIVE FLEET
+                </div>
+                <h2>Welcome, <%= currentUser || 'Vehicle Owner' %></h2>
+                <p>Track your registered vehicles, monitor automated preventive maintenance intervals, book service visits, and review past workshop repair sheets.</p>
+            </div>
+            <div class="hero-actions">
+                <a href="/vehicles/add" class="btn btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Register Vehicle
+                </a>
+                <a href="/services/book" class="btn btn-outline" style="background: rgba(255,255,255,0.08); color: white; border-color: rgba(255,255,255,0.2);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                    Book Service
+                </a>
+            </div>
+        </section>
+
+        <!-- Stretch Goal: Automated Service Reminder Alert Banner -->
+        <% if (serviceReminders && serviceReminders.length > 0) { %>
+            <div class="alert-card">
+                <div class="alert-left">
+                    <div class="alert-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                            <line x1="12" y1="9" x2="12" y2="13"/>
+                            <line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                    </div>
+                    <div class="alert-text">
+                        <h4>Preventive Maintenance Recommended &bull; <%= serviceReminders.length %> Vehicle(s) Due</h4>
+                        <p>Vehicles exceeding 10,000 km or 6 months from purchase date have reached the recommended preventive maintenance interval.</p>
+                    </div>
+                </div>
+                <a href="/vehicles" class="btn btn-warning" style="flex-shrink: 0;">
+                    Review Due Vehicles
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+            </div>
+        <% } %>
+
+        <!-- KPI Metrics Grid -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-top">
+                    <span class="kpi-label">My Registered Fleet</span>
+                    <div class="kpi-icon-wrap kpi-icon-blue">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 11.2 2 11.6 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+                    </div>
+                </div>
+                <div class="kpi-value"><%= totalVehicles %></div>
+                <div class="kpi-foot">Personal vehicles in your profile</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-top">
+                    <span class="kpi-label">My Active Bookings</span>
+                    <div class="kpi-icon-wrap kpi-icon-amber">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                </div>
+                <div class="kpi-value"><%= upcomingServices.length %></div>
+                <div class="kpi-foot">Pending triage &amp; active repairs</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-top">
+                    <span class="kpi-label">Completed Services</span>
+                    <div class="kpi-icon-wrap kpi-icon-emerald">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </div>
+                </div>
+                <div class="kpi-value"><%= completedServices.length %></div>
+                <div class="kpi-foot">Finished repair sheets with invoices</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-top">
+                    <span class="kpi-label">My Maintenance Spend</span>
+                    <div class="kpi-icon-wrap kpi-icon-purple">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+                </div>
+                <div class="kpi-value">₹<%= totalServiceCost.toLocaleString('en-IN') %></div>
+                <div class="kpi-foot">Total spent on your registered fleet</div>
+            </div>
+        </div>
+
+        <!-- Upcoming & Active Services Table -->
+        <div class="section-title-group">
+            <h3 class="section-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                My Active &amp; Scheduled Service Requests
+            </h3>
+            <a href="/services/book" class="btn btn-outline btn-sm">+ Book Service</a>
+        </div>
+
+        <div class="table-panel">
+            <div class="table-responsive">
+                <% if (upcomingServices.length === 0) { %>
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        </div>
+                        <h3>No Active Service Requests</h3>
+                        <p>All your service appointments are completed or none are currently active. Click below to book a new appointment.</p>
+                        <a href="/services/book" class="btn btn-primary">Book New Service</a>
+                    </div>
+                <% } else { %>
+                    <table class="saas-table">
+                        <thead>
+                            <tr>
+                                <th>Registration</th>
+                                <th>Service Category</th>
+                                <th>Reported Problem / Notes</th>
+                                <th>Booking Date</th>
+                                <th>Status</th>
+                                <th style="text-align: right;">Operations</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% upcomingServices.forEach((s) => { %>
+                                <tr>
+                                    <td>
+                                        <a href="/vehicles/<%= s.vehicleNumber %>/history" style="text-decoration: none;">
+                                            <span class="reg-plate" style="margin-bottom: 0; font-size: 13px; padding: 4px 8px;">
+                                                <span class="reg-plate-ind">IND</span>
+                                                <%= s.vehicleNumber %>
+                                            </span>
+                                        </a>
+                                    </td>
+                                    <td><strong><%= s.serviceType %></strong></td>
+                                    <td style="color: var(--text-secondary); max-width: 280px;">
+                                        <%= s.issueDescription && s.issueDescription.length > 55 ? s.issueDescription.substring(0, 55) + '...' : (s.issueDescription || 'Standard Checkup') %>
+                                    </td>
+                                    <td><%= new Date(s.bookingDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) %></td>
+                                    <td>
+                                        <span class="status-pill <%= s.status === 'Accepted' ? 'pill-accepted' : 'pill-pending' %>">
+                                            <%= s.status %>
+                                        </span>
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <a href="/vehicles/<%= s.vehicleNumber %>/history" class="btn btn-outline btn-sm">
+                                            Track Progress
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                <% } %>
+            </div>
+        </div>
+
+        <!-- Recently Completed Services Table -->
+        <div class="section-title-group">
+            <h3 class="section-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                My Completed Work Sheets &amp; Invoices
+            </h3>
+            <a href="/vehicles" class="btn btn-outline btn-sm">My Vehicles</a>
+        </div>
+
+        <div class="table-panel">
+            <div class="table-responsive">
+                <% if (completedServices.length === 0) { %>
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        </div>
+                        <h3>No Completed Service Sheets Yet</h3>
+                        <p>Once services are accepted and completed in the Service Center portal with replaced parts and billing, they will be archived here.</p>
+                    </div>
+                <% } else { %>
+                    <table class="saas-table">
+                        <thead>
+                            <tr>
+                                <th>Registration</th>
+                                <th>Service Conducted</th>
+                                <th>Parts &amp; Consumables Replaced</th>
+                                <th>Completion Date</th>
+                                <th>Billed Cost</th>
+                                <th style="text-align: right;">Vehicle Log</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% completedServices.slice(0, 5).forEach((s) => { %>
+                                <tr>
+                                    <td>
+                                        <a href="/vehicles/<%= s.vehicleNumber %>/history" style="text-decoration: none;">
+                                            <span class="reg-plate" style="margin-bottom: 0; font-size: 13px; padding: 4px 8px;">
+                                                <span class="reg-plate-ind">IND</span>
+                                                <%= s.vehicleNumber %>
+                                            </span>
+                                        </a>
+                                    </td>
+                                    <td><strong><%= s.serviceType %></strong></td>
+                                    <td style="color: var(--text-secondary); max-width: 260px;">
+                                        <%= s.partsReplaced || 'Inspection only' %>
+                                    </td>
+                                    <td><%= s.serviceDate ? new Date(s.serviceDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : 'Logged' %></td>
+                                    <td>
+                                        <span style="font-weight: 700; color: #047857; font-size: 15px;">
+                                            ₹<%= s.cost.toLocaleString('en-IN') %>
+                                        </span>
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <a href="/vehicles/<%= s.vehicleNumber %>/history" class="btn btn-outline btn-sm">
+                                            Service History
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                <% } %>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 AutoCare Manager &bull; Enterprise Automotive Service &amp; Fleet Management Platform</p>
+    </footer>
+
+</body>
+</html>
