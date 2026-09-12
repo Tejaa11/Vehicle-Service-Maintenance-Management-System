@@ -21,9 +21,8 @@ const seedDefaultUsers = async () => {
     }
 };
 
-seedDefaultUsers();
-
 const authController = {
+    seedDefaultUsers,
     // 1. Render Login Form
     renderLogin: (req, res) => {
         if (req.cookies && req.cookies.userRole) {
